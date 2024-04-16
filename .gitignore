@@ -1,0 +1,6 @@
+/samples/
+/.idea/
+/venv/
+/.venv/
+/.buildozer/
+__pycache__/

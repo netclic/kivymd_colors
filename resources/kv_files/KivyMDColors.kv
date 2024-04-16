@@ -1,0 +1,75 @@
+<ColorCard>
+    orientation: "vertical"
+
+    MDLabel:
+        text: root.text
+        color: "grey"
+        adaptive_height: True
+        font_style: "Label"
+        role: "small"
+
+    MDCard:
+        theme_bg_color: "Custom"
+        md_bg_color: root.bg_color
+
+MDScreen:
+    md_bg_color: app.theme_cls.backgroundColor
+
+#    MDIconButton:
+#        on_release: app.open_menu(self)
+#        pos_hint: {"top": .98}
+#        x: "12dp"
+#        icon: "menu"
+
+    MDBoxLayout:
+        orientation: "vertical"
+        spacing: 10
+        #on_height: root.debug(self)
+
+        MDTopAppBar:
+            type: "small"
+            height: "48dp"
+            MDTopAppBarLeadingButtonContainer:
+                MDIconButton:
+                    id: button
+                    icon: "menu"
+                    pos_hint: {"center_y": 0.5}
+                    size_hint_y: None
+                    on_release: app.open_menu(self)
+            MDTopAppBarTitle:
+                text: "KivyMD Palette & Colors"
+                font_style: "Title"
+                role: "small"
+            MDTopAppBarTrailingButtonContainer:
+                MDActionTopAppBarButton:
+                    icon: "lightbulb-on-50"
+                    on_release: app.switch_theme_button()
+
+        MDLabel:
+            id: palette_name
+            font_style: "Title"
+            role: "small"
+            halign: "center"
+            text: "Antiquewhite"
+            size_hint_x: 0.9
+            size_hint_y: None
+            pos_hint: {"center_x": 0.5}
+            radius: [20,]
+            md_bg_color: app.theme_cls.outlineVariantColor
+            bold: True
+
+        MDRecycleView:
+            id: card_list
+            viewclass: "ColorCard"
+            bar_width: 0
+            size_hint_y: None
+            height: root.height - dp(68)
+
+            RecycleGridLayout:
+                cols: 2
+                spacing: "16dp"
+                padding: "16dp"
+                default_size: None, dp(56)
+                default_size_hint: 1, None
+                size_hint_y: None
+                height: self.minimum_height
