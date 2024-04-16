@@ -37,10 +37,10 @@ version = 0.1
 
 # (list) Application requirements
 # comma separated e.g. requirements = sqlite3,kivy
-requirements = python3==3.11.2,
+requirements = python3==3.7.6,
     kivy==2.3.0,
     https://github.com/kivymd/KivyMD/archive/master.zip,
-    hostpython3==3.11.2,
+    hostpython3==3.7.6,
     pillow,
     materialyoucolor,
     exceptiongroup,
@@ -72,7 +72,7 @@ orientation = landscape, portrait
 # author = © Copyright Info
 
 # change the major version of python used by the app
-osx.python_version = 3
+osx.python_version = 3.7.6
 
 # Kivy version to use
 osx.kivy_version = 1.9.1

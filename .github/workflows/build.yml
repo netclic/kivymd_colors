@@ -7,6 +7,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      PYTHONUNBUFFERED: 1
 
     steps:
       - uses: actions/checkout@v2
@@ -33,31 +35,12 @@ jobs:
           path: .buildozer
           key: ${{ runner.os }}-${{ steps.get-date.outputs.date }}-${{ hashFiles('buildozer.spec') }}
 
-#      - name: Check python version
-#        run: |
-#          apt list --installed | grep python3
-#          python3 --version
-#
-#      - name: Upgrade pip
-#        run: |
-#          python3 -m pip install --upgrade pip
-#
-#      - name: Install kivymd 2.0.1dev
-#        run: |
-#          python3 -m pip install https://github.com/kivymd/KivyMD/archive/master.zip
-#
       - name: Build with Buildozer
         uses: ArtemSBulgakov/buildozer-action@v1
         id: buildozer
         with:
           command: buildozer android debug
           buildozer_version: master
-
-      - name: check python version
-        run: |
-          python3 --version
-          python3 -m pip freeze
-          ls -lR
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2
