@@ -45,7 +45,8 @@ requirements = python3==3.10.14,
     materialyoucolor,
     exceptiongroup,
     asyncgui,
-    asynckivy
+    asynckivy,
+    cython==3.0.10
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
