@@ -46,7 +46,8 @@ requirements = python3==3.10.14,
     exceptiongroup,
     asyncgui,
     asynckivy,
-    cython==3.0.10
+    cython==3.0.10,
+    pyjnius==1.6.1
 
 # (str) Custom source folders for requirements
 # Sets custom source for any requirements with recipes
