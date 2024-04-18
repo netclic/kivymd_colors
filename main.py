@@ -1,13 +1,21 @@
 from kivy.utils import platform
 
-if platform != 'android':
-    import os
-    from kivy.config import Config
-    Config.set('graphics', 'resizable', '0')
-    os.environ["KIVY_METRICS_DENSITY"] = "2.5"  # Adjust this value according to your needs
-    os.environ["KIVY_METRICS_FONTSCALE"] = "1.0"
-    Config.set('graphics', 'width', '1080')
-    Config.set('graphics', 'height', '2139')
+# if platform != 'android':
+#     import os
+#     from kivy.config import Config
+#     Config.set('graphics', 'resizable', '0')
+#     os.environ["KIVY_METRICS_FONTSCALE"] = "1.0"
+#
+#     # Fairphone 4 5G
+#     os.environ["KIVY_METRICS_DENSITY"] = "2.5"  # Adjust this value according to your needs
+#     Config.set('graphics', 'width', '1080')
+#     Config.set('graphics', 'height', '2139')
+#
+#     # Honor 90 Lite
+#     os.environ["KIVY_METRICS_DENSITY"] = "2.0"  # Adjust this value according to your needs
+#     Config.set('graphics', 'width', '1080')
+#     Config.set('graphics', 'height', '1920')
+
 
 from kivy.clock import Clock
 from kivy.lang import Builder
