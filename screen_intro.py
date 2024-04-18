@@ -1,3 +1,5 @@
+import pprint
+
 from kivy.clock import Clock
 from kivy.utils import hex_colormap
 
@@ -16,8 +18,12 @@ class ScreenIntro(MDScreen):
 
     menu: MDDropdownMenu = None
 
+
     def __init__(self, **kwargs):
         super().__init__(kwargs)
+        self.color_attributes = [attr_name for attr_name in dir(self.theme_cls) if 'Color' in attr_name]
+        self.colors_position = {attr_name: index for index, attr_name in enumerate(self.color_attributes)}
+        self.initialized = False
 
     def on_kv_post(self, base_widget):
         Clock.schedule_once(self.generate_cards)
@@ -99,29 +105,43 @@ class ScreenIntro(MDScreen):
 
     def switch_palette(self, selected_palette):
         self.theme_cls.primary_palette = selected_palette
-        Clock.schedule_once(self.generate_cards, 0.5)
+        self.generate_cards()
 
     def update_scheme(self, scheme_name):
         self.theme_cls.dynamic_scheme_name = scheme_name
-        Clock.schedule_once(self.generate_cards, 0.5)
+        self.generate_cards()
+        # Clock.schedule_once(self.generate_cards, 0.5)
         # self.scheme_menu.dismiss()
 
     def theme_switch(self) -> None:
         self.theme_cls.switch_theme()
-        Clock.schedule_once(self.generate_cards, 0.5)
+        self.generate_cards()
+        # Clock.schedule_once(self.generate_cards, 0.5)
 
     def generate_cards(self, *args):
         self.ids['palette_name'].text = self.theme_cls.primary_palette + ' - ' + self.theme_cls.dynamic_scheme_name
-        self.ids.card_list.data = []
+        if not self.initialized:
+            self.ids.card_list.data = []
 
-        color_attributes = [attr_name for attr_name in dir(self.theme_cls) if 'Color' in attr_name]
+            for color_name in self.color_attributes:
+                value = f"{color_name}"
+                color = getattr(self.theme_cls, value)
+                self.ids.card_list.data.append(
+                    {
+                        "bg_color": color,
+                        "text": value + '\n' + rgba_color_to_hex(color),
+                    }
+                )
+                self.initialized = True
+        else:
+            for color_name in self.color_attributes:
+                value = f"{color_name}"
+                color = getattr(self.theme_cls, value)
+                self.ids.card_list.data[
+                    self.colors_position[color_name]
+                ]['bg_color'] = color
+                self.ids.card_list.data[
+                    self.colors_position[color_name]
+                ]['text'] = value + '\n' + rgba_color_to_hex(color)
+            self.ids.card_list.refresh_from_data()
 
-        for color_name in color_attributes:
-            value = f"{color_name}"
-            color = getattr(self.theme_cls, value)
-            self.ids.card_list.data.append(
-                {
-                    "bg_color": color,
-                    "text": value + '\n' + rgba_color_to_hex(color),
-                }
-            )
