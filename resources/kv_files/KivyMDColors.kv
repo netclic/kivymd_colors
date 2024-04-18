@@ -7,19 +7,21 @@
         adaptive_height: True
         font_style: "Label"
         role: "small"
+        bold: True
 
     MDCard:
         theme_bg_color: "Custom"
         md_bg_color: root.bg_color
+        style: "elevated"
+        elevation_level: 2
 
-MDScreen:
-    md_bg_color: app.theme_cls.backgroundColor
+<ScreenIntro>:
+    md_bg_color: self.theme_cls.backgroundColor
 
     MDBoxLayout:
         orientation: "vertical"
         spacing: 5
         padding: 5
-#        md_bg_color: "red"
 
         MDBoxLayout:
             orientation: "vertical"
@@ -27,7 +29,6 @@ MDScreen:
             padding: 5
             size_hint_y: None
             height: self.minimum_height
-#            md_bg_color: "blue"
 
             MDTopAppBar:
                 type: "small"
@@ -38,7 +39,7 @@ MDScreen:
                         icon: "menu"
                         pos_hint: {"center_y": 0.5}
                         size_hint_y: None
-                        on_release: app.open_menu(self)
+                        on_release: root.open_menu(self)
                 MDTopAppBarTitle:
                     text: "KivyMD Palette & Colors"
                     font_style: "Title"
@@ -46,37 +47,35 @@ MDScreen:
                 MDTopAppBarTrailingButtonContainer:
                     MDActionTopAppBarButton:
                         icon: "lightbulb-on-50"
-                        on_release: app.switch_theme_button()
+                        on_release: root.switch_theme_button()
 
         MDBoxLayout:
             orientation: "vertical"
             spacing: 5
             padding: 5
-#            md_bg_color: "green"
             height: self.minimum_height
 
-            #on_height: root.debug(self)
 
             MDLabel:
                 id: palette_name
                 font_style: "Title"
-                role: "large"
+                role: "medium"
                 halign: "center"
-#                text: "Antiquewhite"
                 size_hint_y: None
                 radius: [20,]
-                md_bg_color: app.theme_cls.outlineVariantColor
+                md_bg_color: self.theme_cls.outlineVariantColor
                 bold: True
 
             MDRecycleView:
                 id: card_list
                 viewclass: "ColorCard"
                 bar_width: 0
-#                md_bg_color: "grey"
 
                 RecycleGridLayout:
+                    height: self.minimum_height
+                    size_hint_y: None
                     cols: 2
                     spacing: 5
                     padding: 5
-                    default_size: None, dp(56)
+                    default_size: None, dp(80)
                     default_size_hint: 1, None
