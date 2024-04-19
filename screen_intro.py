@@ -1,10 +1,18 @@
 from kivy.clock import Clock
+from kivy.uix.widget import Widget
 from kivy.utils import hex_colormap
+from kivymd.uix.button import MDButton, MDButtonText
+from kivymd.uix.dialog import MDDialog, MDDialogIcon, MDDialogHeadlineText, MDDialogSupportingText, \
+    MDDialogContentContainer, MDDialogButtonContainer
+from kivymd.uix.divider import MDDivider
+from kivymd.uix.list import MDListItem, MDListItemLeadingIcon, MDListItemSupportingText
 
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.screen import MDScreen
 
 from materialyoucolor.utils.platform_utils import SCHEMES
+
+from config import version
 
 
 def rgba_color_to_hex(color):
@@ -17,6 +25,7 @@ class ScreenIntro(MDScreen):
     scheme_menu: MDDropdownMenu = None
     palette_menu: MDDropdownMenu = None
 
+
     def __init__(self, **kwargs):
         super().__init__(kwargs)
         self.color_attributes = [attr_name for attr_name in dir(self.theme_cls) if 'Color' in attr_name]
@@ -25,6 +34,64 @@ class ScreenIntro(MDScreen):
 
     def on_kv_post(self, base_widget):
         Clock.schedule_once(self.generate_cards)
+
+    def display_about(self):
+        dialog = MDDialog(
+            MDDialogIcon(
+                icon="information-outline",
+            ),
+            MDDialogHeadlineText(
+                text="About ... KivyMD Palette colors",
+            ),
+            MDDialogSupportingText(
+                markup=True,
+                text=f"[b]Version : {version}[/b]\n\n"
+                     "[color=#ff0000]KivyMD Palette colors[/color] is written using Python3, KivyMD 2.0.1dev. KivyMD is a collection of Material Design compliant widgets for use with Kivy, a framework for cross-platform, touch-enabled graphical applications.\n\n"
+                     "It is inspired from KivyMD included samples.\n\n"
+                     "It's my first published app for Android.\nSo don't forget to comment in PlayStore.\n\n"
+                    "-- netclic -- (Franck)\n"
+            ),
+            MDDialogContentContainer(
+                MDDivider(),
+                MDListItem(
+                    MDListItemLeadingIcon(
+                        icon="gmail",
+                    ),
+                    MDListItemSupportingText(
+                        text="franky.koa1000@gmail.com",
+                    ),
+                ),
+                MDListItem(
+                    MDListItemLeadingIcon(
+                        icon="web",
+                    ),
+                    MDListItemSupportingText(
+                        text="https://github.com/kivymd",
+                    ),
+                ),
+                MDListItem(
+                    MDListItemLeadingIcon(
+                        icon="web",
+                    ),
+                    MDListItemSupportingText(
+                        text="https://kivy.org/",
+                    ),
+                ),
+                MDDivider(),
+                orientation="vertical",
+            ),
+            MDDialogButtonContainer(
+                Widget(),
+                MDButton(
+                    MDButtonText(text="Ok"),
+                    on_release=lambda x: dialog.dismiss(),
+                    style="text",
+                ),
+                spacing="8dp",
+            ),
+        )
+
+        dialog.open()
 
     def switch_theme_button(self):
         self.theme_cls.theme_style = "Light" if self.theme_cls.theme_style == "Dark" else "Dark"

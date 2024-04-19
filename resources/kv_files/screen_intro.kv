@@ -17,6 +17,7 @@
 
 <ScreenIntro>:
     md_bg_color: self.theme_cls.backgroundColor
+    name: "screen_intro"
 
     MDBoxLayout:
         orientation: "vertical"
@@ -48,6 +49,9 @@
                     MDActionTopAppBarButton:
                         icon: "lightbulb-on-50"
                         on_release: root.switch_theme_button()
+                    MDActionTopAppBarButton:
+                        icon: "information-outline"
+                        on_release: root.display_about()
 
         MDBoxLayout:
             orientation: "vertical"
