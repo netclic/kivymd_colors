@@ -1,18 +1,19 @@
 import logging
 import sys
+import traceback
 
 from kivy.utils import platform
 
-if platform != 'android':
-    import os
-    from kivy.config import Config
-    Config.set('graphics', 'resizable', '0')
-    os.environ["KIVY_METRICS_FONTSCALE"] = "1.0"
-
-    # Fairphone 4 5G
-    os.environ["KIVY_METRICS_DENSITY"] = "2.5"  # Adjust this value according to your needs
-    Config.set('graphics', 'width', '1080')
-    Config.set('graphics', 'height', '2139')
+# if platform != 'android':
+#     import os
+#     from kivy.config import Config
+#     Config.set('graphics', 'resizable', '0')
+#     os.environ["KIVY_METRICS_FONTSCALE"] = "1.0"
+#
+#     # Fairphone 4 5G
+#     os.environ["KIVY_METRICS_DENSITY"] = "2.5"  # Adjust this value according to your needs
+#     Config.set('graphics', 'width', '1080')
+#     Config.set('graphics', 'height', '2139')
 #
 #     # Honor 90 Lite
 #     os.environ["KIVY_METRICS_DENSITY"] = "2.0"  # Adjust this value according to your needs
@@ -61,7 +62,8 @@ class KivyMDColors(MDApp):
             sm.add_widget(ScreenIntro(name='screen_intro'))
 
             return sm
-        except Exception as e:
+        except Exception:
+            traceback.print_exc()
             logging.exception("Exception occured in build method")
 
 

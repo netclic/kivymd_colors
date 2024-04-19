@@ -1,9 +1,6 @@
-import pprint
-
 from kivy.clock import Clock
 from kivy.utils import hex_colormap
 
-from kivymd.uix.boxlayout import MDBoxLayout
 from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.screen import MDScreen
 
@@ -17,7 +14,8 @@ def rgba_color_to_hex(color):
 class ScreenIntro(MDScreen):
 
     menu: MDDropdownMenu = None
-
+    scheme_menu: MDDropdownMenu = None
+    palette_menu: MDDropdownMenu = None
 
     def __init__(self, **kwargs):
         super().__init__(kwargs)
@@ -32,19 +30,42 @@ class ScreenIntro(MDScreen):
         self.theme_cls.theme_style = "Light" if self.theme_cls.theme_style == "Dark" else "Dark"
 
     def get_instance_from_menu(self, name_item):
+        """
+        Parameters:
+        - menu: The menu that contains the instance we want to retrieve.
+        - name_item: The name of the item we are looking for in the menu.
+
+        Returns:
+        - The instance of the item in the menu with the given name_item, if found.
+
+        Explanation:
+        This method is used to retrieve an instance from a given menu based on the item's name.
+        It takes two parameters, menu and name_item. The method iterates over the data in the menu until
+        * it finds an item with the same name_item. Once found, it gets the index and position of the item in the menu.
+            It then uses the index, data, and view class to get the corresponding instance
+        * from the view_adapter. Finally, it sets the position of the instance and returns it.
+
+        """
+
         index = 0
+        data = None
+        position = (0, 0)
+
         rv = self.menu.ids.md_menu
         opts = rv.layout_manager.view_opts
-        datas = rv.data[0]
+        datas = rv.data
 
-        for data in rv.data:
+        for data in datas:
             if data["text"] == name_item:
                 index = rv.data.index(data)
+                position = [rv.right + rv.width / 2, rv.top - (data['height'] * 0.66 + index * data['height'])]
                 break
 
         instance = rv.view_adapter.get_view(
-            index, datas, opts[index]["viewclass"]
+            index, data, opts[index]["viewclass"]
         )
+
+        instance.pos = position
 
         return instance
 
@@ -76,10 +97,13 @@ class ScreenIntro(MDScreen):
                     "on_release": lambda x=name_palette: self.switch_palette(x),
                 }
             )
-        MDDropdownMenu(
+        self.palette_menu = MDDropdownMenu(
             caller=instance_from_menu,
             items=menu_items,
-        ).open()
+            hor_growth="right",
+            ver_growth="down"
+        )
+        self.palette_menu.open()
 
     def set_scheme_type(self):
         instance_from_menu = self.get_instance_from_menu("Set scheme type")
@@ -96,9 +120,7 @@ class ScreenIntro(MDScreen):
         self.scheme_menu = MDDropdownMenu(
             caller=instance_from_menu,
             items=menu_items,
-            width=400,
-            max_height=590,
-            hor_growth="left",
+            hor_growth="right",
             ver_growth="down"
         )
         self.scheme_menu.open()
@@ -110,13 +132,10 @@ class ScreenIntro(MDScreen):
     def update_scheme(self, scheme_name):
         self.theme_cls.dynamic_scheme_name = scheme_name
         self.generate_cards()
-        # Clock.schedule_once(self.generate_cards, 0.5)
-        # self.scheme_menu.dismiss()
 
     def theme_switch(self) -> None:
         self.theme_cls.switch_theme()
         self.generate_cards()
-        # Clock.schedule_once(self.generate_cards, 0.5)
 
     def generate_cards(self, *args):
         self.ids['palette_name'].text = self.theme_cls.primary_palette + ' - ' + self.theme_cls.dynamic_scheme_name
@@ -144,4 +163,3 @@ class ScreenIntro(MDScreen):
                     self.colors_position[color_name]
                 ]['text'] = value + '\n' + rgba_color_to_hex(color)
             self.ids.card_list.refresh_from_data()
-
