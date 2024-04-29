@@ -7,7 +7,7 @@ title = KivyMD Palette colors
 package.name = kivymd_colors
 
 # (str) Package domain (needed for android/ios packaging)
-package.domain = info.calleja.devel
+package.domain = info.calleja
 
 # (str) Source code where the main.py live
 source.dir = .
@@ -22,14 +22,14 @@ source.include_patterns = resources/img/*.png
 #source.exclude_exts = spec
 
 # (list) List of directory to exclude (let empty to not exclude anything)
-#source.exclude_dirs = tests, bin, venv
+source.exclude_dirs = tests, bin, venv, .gitignore, .DS_Store, .idea, .git
 
 # (list) List of exclusions using pattern matching
 # Do not prefix with './'
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 1.0.0
+version = 1.0.2
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
@@ -45,8 +45,9 @@ requirements = python3==3.11.2,
     materialyoucolor,
     exceptiongroup,
     asyncgui,
-    asynckivy
-#    asynckivy,
+    asynckivy,
+    android
+#    https://github.com/MichaelStott/KivMob/archive/refs/heads/master.zip
 #    cython==3.0.10,
 #    pyjnius==1.6.1
 
@@ -106,22 +107,22 @@ android.presplash_color = black
 
 # (list) Permissions
 # (See https://python-for-android.readthedocs.io/en/latest/buildoptions/#build-options-1 for all the supported syntaxes and properties)
-#android.permissions = android.permission.INTERNET, (name=android.permission.WRITE_EXTERNAL_STORAGE;maxSdkVersion=18)
+android.permissions = android.permission.INTERNET, android.permission.ACCESS_NETWORK_STATE
 
 # (list) features (adds uses-feature -tags to manifest)
 #android.features = android.hardware.usb.host
 
 # (int) Target Android API, should be as high as possible.
-#android.api = 31
+android.api = 33
 
 # (int) Minimum API your APK / AAB will support.
-#android.minapi = 21
+android.minapi = 21
 
 # (int) Android SDK version to use
-#android.sdk = 20
+#android.sdk = 33
 
 # (str) Android NDK version to use
-#android.ndk = 23b
+android.ndk = 25b
 
 # (int) Android NDK API to use. This is the minimum API your app will support, it should usually match android.minapi.
 #android.ndk_api = 21
@@ -188,7 +189,7 @@ android.accept_sdk_license = True
 
 # (list) List of Java files to add to the android project (can be java or a
 # directory containing the files)
-#android.add_src =
+android.add_src = ./src
 
 # (list) Android AAR archives to add
 #android.add_aars =
@@ -206,18 +207,18 @@ android.accept_sdk_license = True
 # android.add_resources = my_icons/all-inclusive.png:drawable/all_inclusive.png
 # 2) A directory, here  'legal_icons' must contain resources of one kind
 # android.add_resources = legal_icons:drawable
-# 3) A directory, here 'legal_resources' must contain one or more directories, 
+# 3) A directory, here 'legal_resources' must contain one or more directories,
 # each of a resource kind:  drawable, xml, etc...
 # android.add_resources = legal_resources
 #android.add_resources =
 
 # (list) Gradle dependencies to add
-#android.gradle_dependencies =
+android.gradle_dependencies = com.google.firebase:firebase-ads:21.4.0, androidx.appcompat:appcompat:1.6.1, androidx.activity:activity:1.6.1
 
 # (bool) Enable AndroidX support. Enable when 'android.gradle_dependencies'
 # contains an 'androidx' package, or any package from Kotlin source.
 # android.enable_androidx requires android.api >= 28
-#android.enable_androidx = True
+android.enable_androidx = True
 
 # (list) add java compile options
 # this can for example be necessary when importing certain java libraries using the 'android.gradle_dependencies' option
@@ -225,14 +226,14 @@ android.accept_sdk_license = True
 # android.add_compile_options = "sourceCompatibility = 1.8", "targetCompatibility = 1.8"
 
 # (list) Gradle repositories to add {can be necessary for some android.gradle_dependencies}
-# please enclose in double quotes 
+# please enclose in double quotes
 # e.g. android.gradle_repositories = "maven { url 'https://kotlin.bintray.com/ktor' }"
 #android.add_gradle_repositories =
 
-# (list) packaging options to add 
+# (list) packaging options to add
 # see https://google.github.io/android-gradle-dsl/current/com.android.build.gradle.internal.dsl.PackagingOptions.html
 # can be necessary to solve conflicts in gradle_dependencies
-# please enclose in double quotes 
+# please enclose in double quotes
 # e.g. android.add_packaging_options = "exclude 'META-INF/common.kotlin_module'", "exclude 'META-INF/*.kotlin_module'"
 #android.add_packaging_options =
 
@@ -271,8 +272,10 @@ android.accept_sdk_license = True
 #android.wakelock = False
 
 # (list) Android application meta-data to set (key=value format)
-#android.meta_data =
+# android.meta_data = com.google.android.gms.ads.APPLICATION_ID=ca-app-pub-1930200705094441
+android.meta_data = com.google.android.gms.ads.APPLICATION_ID=ca-app-pub-3940256099942544~3347511713
 
+# Mon ID : pub-1930200705094441
 # (list) Android library project to add (will be added in the
 # project.properties automatically.)
 #android.library_references =
