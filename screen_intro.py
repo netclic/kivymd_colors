@@ -25,7 +25,6 @@ class ScreenIntro(MDScreen):
     scheme_menu: MDDropdownMenu = None
     palette_menu: MDDropdownMenu = None
 
-
     def __init__(self, **kwargs):
         super().__init__(kwargs)
         self.color_attributes = [attr_name for attr_name in dir(self.theme_cls) if 'Color' in attr_name]
@@ -89,6 +88,7 @@ class ScreenIntro(MDScreen):
                 ),
                 spacing="8dp",
             ),
+            auto_dismiss=True,
         )
 
         dialog.open()
