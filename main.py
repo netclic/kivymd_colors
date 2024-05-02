@@ -2,7 +2,6 @@ import logging
 import sys
 import traceback
 
-from kivmob import KivMob, TestIds
 from kivy.utils import platform
 
 if platform != 'android':
