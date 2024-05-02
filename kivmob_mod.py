@@ -34,7 +34,7 @@ if platform == "android":
         appCompatActivity = cast("androidx.appcompat.app.AppCompatActivity", activity.mActivity)
         Context = autoclass('android.content.Context')
         LoadAdError = autoclass('com.google.android.gms.ads.LoadAdError')
-        RewardedAdLoadCallback4kivy = autoclass('info.calleja.kivymd_colors.RewardedAdLoadCallback4kivy')
+        RewardedAdLoadCallback4kivy = autoclass('info.calleja.devel.kivymd_colors.RewardedAdLoadCallback4kivy')
 
         #for making toast
         AndroidString = autoclass('java.lang.String')
@@ -289,7 +289,7 @@ class AndroidBridge(AdMobBridge):
         self._adview = AdView(activity.mActivity)
 
         # AdMob Interstitial ad call back
-        InterstitialAdLoadCallback4kivy = autoclass('info.calleja.kivymd_colors.InterstitialAdLoadCallback4kivy')
+        InterstitialAdLoadCallback4kivy = autoclass('info.calleja.devel.kivymd_colors.InterstitialAdLoadCallback4kivy')
         self.interstitialAdLoadCallback4kivy = InterstitialAdLoadCallback4kivy()
 
         # toast用
@@ -401,7 +401,7 @@ class AndroidBridge(AdMobBridge):
     @run_on_ui_thread
     def load_rewarded_ad(self, unitID, options={}):
         RewardedAd = autoclass("com.google.android.gms.ads.rewarded.RewardedAd")
-        RewardedAdLoadCallback4kivy = autoclass('info.calleja.kivymd_colors.RewardedAdLoadCallback4kivy')
+        RewardedAdLoadCallback4kivy = autoclass('info.calleja.devel.kivymd_colors.RewardedAdLoadCallback4kivy')
         self.rewardedAdLoadCallback4kivy = RewardedAdLoadCallback4kivy()
         adRequest = self._get_builder(options).build()
 

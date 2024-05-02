@@ -1,4 +1,4 @@
-package info.calleja.kivymd_colors;
+package info.calleja.devel.kivymd_colors;
 
 import android.util.Log;
 import androidx.annotation.NonNull;
