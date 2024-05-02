@@ -29,7 +29,7 @@ source.exclude_dirs = tests, bin, venv, .gitignore, .DS_Store, .idea, .git
 #source.exclude_patterns = license,images/*/*.jpg
 
 # (str) Application versioning (method 1)
-version = 1.0.2
+version = 1.0.3
 
 # (str) Application versioning (method 2)
 # version.regex = __version__ = ['"](.*)['"]
